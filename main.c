@@ -1,12 +1,18 @@
+
 #include <string.h>
 
+
+//Global variables
 int flag;
 char cndvar[10][3];
-char varlt[10][3], /* variable list*/ clvarlt[40][3]; /* clause var list */
-char c[3], vp[3], /* condition variable */  v[3]; /*variable */
+char varlt[10][3], /* variable list*/ 
+char clvarlt[40][3]; /* clause var list */
+char c[3], vp[3], /* condition variable */  
+char v[3]; /*variable */
 char fedint[10], interest[10], stock[10], dollar[10], fedmon[10];
 char po[10], /* position */  qu[10]; /* qualify */
-int instlt[10];         /* instantiated list*/
+
+int instlt[10]; /* instantiated list*/
 int f, i, j, k, s, fp   /* front pointer */;
 int  bp  /* back pointer */,  gr /* grade */,  sn; /* statement number */
 int cn;  /* clause number */
@@ -15,21 +21,21 @@ void search(void);
 void check_instantiation(void);
 void instantiate(void);
 
-int main()
+main()
 {
     /******** INITIALIZATION SECTION ***********/
-    fp=1;
-    bp=1;
+    fp = 1;
+    bp = 1;
 
-    for (i=1;i < 41; i++)
+    for (i = 1; i < 41; i++)
         strcpy(clvarlt[i], "");
-    for (i=1;i < 11; i++)
+    for (i = 1; i < 11; i++)
         strcpy(cndvar[i], "");
-    for (i=1;i < 11; i++)
+    for (i = 1; i < 11; i++)
         strcpy(instlt[i], "");
-    for (i=1;i < 11; i++)
+    for (i = 1; i < 11; i++)
         strcpy(varlt[i], "");
-    for (i=1;i < 11; i++)
+    for (i = 1; i < 11; i++)
     {
         strcpy(cndvar[i], "");
         strcpy(varlt[i], "");
@@ -49,8 +55,10 @@ int main()
     strcpy(varlt[5], "ST");
 
     printf("*** VARIABLE LIST ***\n");
-    for (i=1;i < 11; i++)
-        printf("ENTER VARIABLE   %d   %s\n", i, varlt[i]);
+    for (i = 1;i  < 11; i++)
+        printf("ENTER VARIABLE  %d   %s\n", i, varlt[i]);
+    
+    
     printf("HIT RETURN TO CONTINUE");
     getchar();
 
@@ -68,6 +76,7 @@ int main()
     for (i = 1; i < 9; i++)
     {
         printf("** CLAUSE %d\n", i);
+        
         for (j = 1; j < 5; j++)
         {
             k = 4 * (i - 1) + j;
@@ -84,21 +93,27 @@ int main()
     /****** INFERENCE SECTION *****************/
     printf("ENTER CONDITION VARIABLE? ");
     gets(c);
+    
+    
     /* place condition variable c on condition var queue cndvar */
     strcpy(cndvar[bp], c);
+    
     /* move backpointer (bp) to back */
     bp = bp + 1;
+    
     /* set the condition variable pointer consisting of the 
     statement number (sn) and the clause number (cn) */
     sn = 1; cn = 1;
+    
     /* find the next statement number containing the condition variable
     which is in front of the queue (cndvar), this statement number
     is located in the clause variable list (clvarlt) */
     /* start at the beginning */
     f=1;
-b496: search();
+
+    b496: search();
     /* point to first clause in statement */
-    cn=1;
+    cn = 1;
     if (sn != 0)
         /* more statements */
     {
@@ -107,9 +122,9 @@ b496: search();
         /* clause variable */
         strcpy(v, clvarlt[i]);
         /* are there any more clauses for this statement */
-        while (strcmp(v, ""))
+        while (strcmp(v, "")){
             /* more clauses */
-        {
+            
             /* check instantiation of this clause */
             check_instantiation();
             cn = cn+1;
@@ -125,26 +140,31 @@ b496: search();
         {
             /* statement 1 */
             /***** comment 1500 *****/
-        case 1: if (strcmp(interest, "FALL") == 0) s=1;
+        case 1: 
+            if (strcmp(interest, "FALL") == 0) s=1;
             break;
             /* statement 2 */
             /***** comment 1510 *****/
-        case 2: if (strcmp(interest, "RISE") == 0) s=1;
+        case 2: 
+            if (strcmp(interest, "RISE") == 0) s=1;
             break;
             /* statement 3 */
             /***** comment 1540 *****/
-        case 3: if (strcmp(dollar, "FALL") == 0) s=1;
+        case 3: 
+            if (strcmp(dollar, "FALL") == 0) s=1;
             break;
             /* statement 4 */
             /***** comment 1550 *****/
-        case 4: if (strcmp(dollar, "RISE") == 0) s=1;
+        case 4: 
+            if (strcmp(dollar, "RISE") == 0) s=1;
             break;
             /* statement 5 */
-        case 5: if ((strcmp(fedint, "FALL") == 0) &&
-                    (strcmp(fedmon, "ADD")) == 0) s=1;
+        case 5: 
+            if ((strcmp(fedint, "FALL") == 0) && (strcmp(fedmon, "ADD")) == 0) s=1;
             break;
             /* statement 6 */
-        case 6: if ((strcmp(qu, "YES") == 0) && (gr >= 3.5) == 0) s=1;
+        case 6: 
+            if ((strcmp(qu, "YES") == 0) && (gr >= 3.5) == 0) s=1;
             break;
             /***** comment 1610 *****/
         }
@@ -163,7 +183,7 @@ b496: search();
             /* put variable on the conclusion variable queue */
         case 1:
             strcpy(stock, "RISE");
-            printf("ST=RISE\n");
+            printf("ST = RISE\n");
             strcpy(v, "ST");
             instantiate();
             break;
@@ -171,7 +191,7 @@ b496: search();
             /* put variable on the conclusion variable queue */
         case 2:
             strcpy(stock, "FALL");
-            printf("ST=FALL\n");
+            printf("ST = FALL\n");
             strcpy(v, "ST");
             instantiate();
             break;
@@ -179,7 +199,7 @@ b496: search();
             /* put variable on the conclusion variable queue */
         case 3:
             strcpy(interest, "RISE");
-            printf("IN=RISE\n");
+            printf("IN = RISE\n");
             strcpy(v, "IN");
             instantiate();
             break;
@@ -187,20 +207,20 @@ b496: search();
             /* put variable on the conclusion variable queue */
         case 4:
             strcpy(interest, "FALL");
-            printf("IN=FALL\n");
+            printf("IN = FALL\n");
             strcpy(v, "IN");
             instantiate();
             break;
             /* put variable on the conclusion variable queue */
         case 5:
             strcpy(interest, "FALL");
-            printf("IN=FALL\n");
+            printf("IN = FALL\n");
             strcpy(v, "IN");
             instantiate();
             break;
         case 6:
             strcpy(po, "YES");
-            printf("PO=YES\n");
+            printf("PO = YES\n");
             break;
             /*********** comment 1610 ***********/
         }
@@ -230,7 +250,7 @@ The instantiate indication (instlt) is a 0 if not, a 1 if it is.
 The vriable list (varlt) contains the variable (v) */
 void check_instantiation()
 {
-    i=1;
+    i = 1;
 
     /* find variable in the variable list */
     while ((strcmp(v, varlt[i]) != 0) && (i <= 10)) i = i+1;
@@ -312,8 +332,7 @@ void instantiate()
     i = 1;
 
     /* determine if (v) is or already has been on the queue (cndvar) */
-    while ((strcmp(v, cndvar[i] != 0) && (i <= 10)))
-		i = i + 1;
+    while ((strcmp(v, cndvar[i] != 0) && (i <= 10)) i=i+1;
     /* variable has not been on the queue. Store it in the back of the queue */
     if (strcmp(v, cndvar[i]) != 0)
     {
